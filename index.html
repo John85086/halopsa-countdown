@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>February 2026 Countdown</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body {
+      font-family: Segoe UI, Arial, sans-serif;
+      margin: 0;
+      padding: 16px;
+      background: transparent;
+    }
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .box {
+      background: #111827;
+      color: #fff;
+      border-radius: 10px;
+      padding: 12px 14px;
+      min-width: 110px;
+      text-align: center;
+    }
+    .num {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .lbl {
+      opacity: .8;
+      font-size: 11px;
+      letter-spacing: .08em;
+      margin-top: 4px;
+    }
+    .done {
+      margin-top: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #b91c1c;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="title">Countdown to End of Cooper</div>
+
+  <div class="row" id="timer">
+    <div class="box"><div class="num" id="d">--</div><div class="lbl">DAYS</div></div>
+    <div class="box"><div class="num" id="h">--</div><div class="lbl">HOURS</div></div>
+    <div class="box"><div class="num" id="m">--</div><div class="lbl">MINUTES</div></div>
+    <div class="box"><div class="num" id="s">--</div><div class="lbl">SECONDS</div></div>
+  </div>
+
+  <div id="msg"></div>
+
+  <script>
+    // End of February 2026 (local browser time)
+    const target = new Date("2026-02-28T23:59:59").getTime();
+    const pad = n => String(n).padStart(2, "0");
+
+    function tick() {
+      const now = Date.now();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        document.getElementById("timer").style.display = "none";
+        document.getElementById("msg").innerHTML =
+          "<div class='done'>✅ February is over!</div>";
+        clearInterval(intv);
+        return;
+      }
+
+      document.getElementById("d").textContent = pad(Math.floor(diff / 86400000));
+      document.getElementById("h").textContent = pad(Math.floor(diff / 3600000) % 24);
+      document.getElementById("m").textContent = pad(Math.floor(diff / 60000) % 60);
+      document.getElementById("s").textContent = pad(Math.floor(diff / 1000) % 60);
+    }
+
+    tick();
+    const intv = setInterval(tick, 1000);
+  </script>
+
+</body>
+</html>
